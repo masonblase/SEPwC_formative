@@ -14,7 +14,17 @@ add_task <- function(task) {
 }
 
 list_tasks <- function() {
-
+  if (file.exists(TASK_FILE)) {
+    tasks <- readLines(TASK_FILE)
+    output <- paste(seq_along(tasks),
+                    tasks,
+                    sep = ". ",
+                    collapse = "\n"
+    )
+    return(output)
+  } else {
+    return("No tasks")
+  }
 }
 
 remove_task <- function(index) {
