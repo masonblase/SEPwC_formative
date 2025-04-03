@@ -6,7 +6,11 @@ suppressPackageStartupMessages({
 TASK_FILE <- ".tasks.txt" # nolint
 
 add_task <- function(task) {
-
+  write(task,
+        file = TASK_FILE,
+        append = TRUE,
+        sep = "\n"
+      )
 }
 
 list_tasks <- function() {
