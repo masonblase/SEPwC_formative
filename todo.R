@@ -12,7 +12,21 @@ add_task <- function(task) {
 }
 
 list_tasks <- function() {
-
+  # Used Google Gemini to assist in writing following code
+  if (file.exists(TASK_FILE)) {
+    tasks <- readLines(TASK_FILE)
+    if (length(tasks) > 0) {
+      cat("--- Tasks in", TASK_FILE, "---\n")
+      for (i in seq_along(tasks)) {
+        cat(paste0(i, ". ", tasks[i], "\n"))
+      }
+      cat("---------------------------\n")
+    } else {
+      cat("No tasks found in", TASK_FILE, "\n")
+    }
+  } else {
+    cat("Task file", TASK_FILE, "does not exist yet.\n")
+  }
 }
 
 remove_task <- function(index) {
