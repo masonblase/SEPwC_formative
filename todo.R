@@ -17,15 +17,16 @@ list_tasks <- function() {
   if (file.exists(TASK_FILE)) {
     tasks <- readLines(TASK_FILE)
     if (length(tasks) > 0) {
+      result <- character(0)  # Initialize an empty character vector
       for (i in seq_along(tasks)) {
-        cat(paste0(i, ". ", tasks[i], "\n"))
+        result <- c(result, paste0(i, ". ", tasks[i]))
       }
-      cat("---------------------------\n")
+      return(paste0(result, collapse = "\n")) # Return as single string
     } else {
-      cat("No tasks found in", TASK_FILE, "\n")
+      return("No tasks found in .tasks.txt\n")
     }
   } else {
-    stop("Task file", TASK_FILE, "does not exist yet.\n")
+    stop("Task file .tasks.txt does not exist yet.\n")
   }
 }
 
@@ -44,27 +45,27 @@ remove_task <- function(index) {
       stop(paste0("Error: Invalid task index '", index, "' in ", TASK_FILE, "\n"))
     }
   } else {
-    stop("Error: Task file", TASK_FILE, "does not exist.\n")
+    stop("Error: Task file .tasks.txt does not exist.\n")
   }
 }
 
 main <- function(args) {
-
+  
   if (!is.null(args$add)) {
     add_task(args$add)
   } else if (args$list) {
     tasks <- list_tasks()
-    print(tasks)
+    cat(tasks) # change print to cat
   } else if (!is.null(args$remove)) {
     remove_task(args$remove)
   } else {
-    print("Use --help to get help on using this program")
+    cat("Use --help to get help on using this program\n") # change print to cat and add a newline
   }
 }
 
 
 if (sys.nframe() == 0) {
-
+  
   # main program, called via Rscript
   parser <- ArgumentParser(description = "Command-line Todo List")
   parser$add_argument("-a", "--add",
@@ -74,7 +75,7 @@ if (sys.nframe() == 0) {
                       help = "List all tasks")
   parser$add_argument("-r", "--remove",
                       help = "Remove a task by index")
-
+  
   args <- parser$parse_args()
   main(args)
 }
