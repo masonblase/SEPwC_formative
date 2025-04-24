@@ -6,7 +6,8 @@ suppressPackageStartupMessages({
 TASK_FILE <- ".tasks.txt" # nolint
 
 add_task <- function(task) {
-  write(task_description,
+  # Code written with assistance of Google Gemini
+  write(task,
         file = TASK_FILE,
         append = TRUE)
 }
@@ -78,3 +79,4 @@ if (sys.nframe() == 0) {
   args <- parser$parse_args()
   main(args)
 }
+
