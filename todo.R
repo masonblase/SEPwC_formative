@@ -12,7 +12,7 @@ add_task <- function(task) {
 }
 
 list_tasks <- function() {
-  # Used Google Gemini to assist in writing following code
+  # Code written with assistance of Google Gemini
   if (file.exists(TASK_FILE)) {
     tasks <- readLines(TASK_FILE)
     if (length(tasks) > 0) {
@@ -30,7 +30,22 @@ list_tasks <- function() {
 }
 
 remove_task <- function(index) {
-
+  # Code written with assistance of Google Gemini
+  if (file.exists(TASK_FILE)) {
+    tasks <- readLines(TASK_FILE)
+    index <- as.integer(index) # Ensure it's an integer
+    
+    if (!is.na(index) && index >= 1 && index <= length(tasks)) {
+      removed_task <- tasks[index]
+      tasks <- tasks[-index]
+      writeLines(tasks, TASK_FILE)
+      cat(paste0("Task '", removed_task, "' (index ", index, ") removed from ", TASK_FILE, "\n"))
+    } else {
+      cat(paste0("Error: Invalid task index '", index, "' in ", TASK_FILE, "\n"))
+    }
+  } else {
+    cat("Error: Task file", TASK_FILE, "does not exist.\n")
+  }
 }
 
 main <- function(args) {
