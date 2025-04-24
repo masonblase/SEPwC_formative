@@ -17,7 +17,6 @@ list_tasks <- function() {
   if (file.exists(TASK_FILE)) {
     tasks <- readLines(TASK_FILE)
     if (length(tasks) > 0) {
-      cat("--- Tasks in", TASK_FILE, "---\n")
       for (i in seq_along(tasks)) {
         cat(paste0(i, ". ", tasks[i], "\n"))
       }
@@ -26,7 +25,7 @@ list_tasks <- function() {
       cat("No tasks found in", TASK_FILE, "\n")
     }
   } else {
-    cat("Task file", TASK_FILE, "does not exist yet.\n")
+    stop("Task file", TASK_FILE, "does not exist yet.\n")
   }
 }
 
@@ -42,10 +41,10 @@ remove_task <- function(index) {
       writeLines(tasks, TASK_FILE)
       cat(paste0("Task '", removed_task, "' (index ", index, ") removed from ", TASK_FILE, "\n"))
     } else {
-      cat(paste0("Error: Invalid task index '", index, "' in ", TASK_FILE, "\n"))
+      stop(paste0("Error: Invalid task index '", index, "' in ", TASK_FILE, "\n"))
     }
   } else {
-    cat("Error: Task file", TASK_FILE, "does not exist.\n")
+    stop("Error: Task file", TASK_FILE, "does not exist.\n")
   }
 }
 
